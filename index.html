@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>四川麻将</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/mahjong.css">
+</head>
+<body>
+    <div id="app">
+        <header class="game-header">
+            <h1>四川麻将</h1>
+            <div class="game-info">
+                <span id="current-player">当前玩家: 东</span>
+                <span id="remaining-tiles">剩余牌数: 144</span>
+            </div>
+        </header>
+
+        <main class="game-container">
+            <!-- 其他玩家区域 -->
+            <div class="other-players">
+                <div class="player north" id="player-north">
+                    <div class="player-name">北</div>
+                    <div class="hand-tiles"></div>
+                </div>
+                <div class="player west" id="player-west">
+                    <div class="player-name">西</div>
+                    <div class="hand-tiles"></div>
+                </div>
+                <div class="player east" id="player-east">
+                    <div class="player-name">东</div>
+                    <div class="hand-tiles"></div>
+                </div>
+            </div>
+
+            <!-- 中央牌桌区域 -->
+            <div class="table-center">
+                <div class="discarded-tiles" id="discarded-tiles"></div>
+                <div class="game-actions">
+                    <button id="draw-tile" class="action-btn">摸牌</button>
+                    <button id="discard-tile" class="action-btn" disabled>出牌</button>
+                    <button id="peng" class="action-btn" disabled>碰</button>
+                    <button id="gang" class="action-btn" disabled>杠</button>
+                    <button id="hu" class="action-btn" disabled>胡</button>
+                </div>
+            </div>
+
+            <!-- 当前玩家区域 -->
+            <div class="current-player" id="player-south">
+                <div class="player-name">南 (你)</div>
+                <div class="hand-tiles" id="current-hand"></div>
+                <div class="melded-tiles" id="current-melded"></div>
+            </div>
+        </main>
+
+        <!-- 游戏控制面板 -->
+        <div class="control-panel">
+            <button id="new-game" class="control-btn">新游戏</button>
+            <button id="auto-sort" class="control-btn">自动理牌</button>
+            <button id="game-rules" class="control-btn">游戏规则</button>
+        </div>
+    </div>
+
+    <!-- 游戏规则弹窗 -->
+    <div id="rules-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>四川麻将规则</h2>
+            <div class="rules-content">
+                <p>四川麻将是一种流行的麻将变体，具有以下特点：</p>
+                <ul>
+                    <li>使用108张牌（万、条、筒各36张）</li>
+                    <li>没有风牌和箭牌</li>
+                    <li>支持碰、杠、胡等基本操作</li>
+                    <li>胡牌需要满足基本牌型</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="js/main.js"></script>
+</body>
+</html> 

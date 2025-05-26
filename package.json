@@ -1,0 +1,27 @@
+{
+  "name": "sichuan-mahjong",
+  "version": "1.0.0",
+  "description": "四川麻将游戏 - 纯前端实现",
+  "main": "index.html",
+  "type": "module",
+  "scripts": {
+    "dev": "python3 -m http.server 8080",
+    "serve": "python3 -m http.server 8080",
+    "start": "python3 -m http.server 8080",
+    "server": "cd server && npm install && npm start",
+    "server:dev": "cd server && npm run dev",
+    "install:server": "cd server && npm install"
+  },
+  "keywords": [
+    "mahjong",
+    "game",
+    "javascript",
+    "html5",
+    "css3",
+    "四川麻将"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "devDependencies": {},
+  "dependencies": {}
+} 
