@@ -13,24 +13,32 @@
             <h1>四川麻将</h1>
             <div class="game-info">
                 <span id="current-player">当前玩家: 东</span>
-                <span id="remaining-tiles">剩余牌数: 144</span>
+                <span id="remaining-tiles">剩余牌数: 108</span>
             </div>
         </header>
 
         <main class="game-container">
-            <!-- 其他玩家区域 -->
+            <!-- 移动端其他玩家包装器 -->
             <div class="other-players">
+                <!-- 北方玩家 -->
                 <div class="player north" id="player-north">
                     <div class="player-name">北</div>
                     <div class="hand-tiles"></div>
+                    <div class="melded-tiles"></div>
                 </div>
+
+                <!-- 西方玩家 -->
                 <div class="player west" id="player-west">
                     <div class="player-name">西</div>
                     <div class="hand-tiles"></div>
+                    <div class="melded-tiles"></div>
                 </div>
+
+                <!-- 东方玩家 -->
                 <div class="player east" id="player-east">
                     <div class="player-name">东</div>
                     <div class="hand-tiles"></div>
+                    <div class="melded-tiles"></div>
                 </div>
             </div>
 
@@ -47,7 +55,7 @@
             </div>
 
             <!-- 当前玩家区域 -->
-            <div class="current-player" id="player-south">
+            <div class="player current-player" id="player-south">
                 <div class="player-name">南 (你)</div>
                 <div class="hand-tiles" id="current-hand"></div>
                 <div class="melded-tiles" id="current-melded"></div>

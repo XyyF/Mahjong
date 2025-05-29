@@ -9,12 +9,12 @@ body {
     font-family: 'Microsoft YaHei', Arial, sans-serif;
     background: linear-gradient(135deg, #2c5530 0%, #1a3d1f 100%);
     color: #fff;
-    min-height: 100vh;
-    overflow-x: hidden;
+    height: 100vh;
+    overflow: hidden;
 }
 
 #app {
-    min-height: 100vh;
+    height: 100vh;
     display: flex;
     flex-direction: column;
 }
@@ -22,29 +22,31 @@ body {
 /* 游戏头部 */
 .game-header {
     background: rgba(0, 0, 0, 0.3);
-    padding: 15px 30px;
+    padding: 10px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     border-bottom: 2px solid #4a7c59;
+    height: 60px;
+    flex-shrink: 0;
 }
 
 .game-header h1 {
-    font-size: 2rem;
+    font-size: 1.5rem;
     color: #ffd700;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .game-info {
     display: flex;
-    gap: 30px;
-    font-size: 1.1rem;
+    gap: 20px;
+    font-size: 0.9rem;
 }
 
 .game-info span {
     background: rgba(255, 255, 255, 0.1);
-    padding: 8px 16px;
-    border-radius: 20px;
+    padding: 6px 12px;
+    border-radius: 15px;
     border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
@@ -53,50 +55,148 @@ body {
     flex: 1;
     display: grid;
     grid-template-areas: 
-        "north north north"
+        "north-west north north-east"
         "west center east"
         "south south south";
-    grid-template-rows: 1fr 2fr 1fr;
-    grid-template-columns: 1fr 2fr 1fr;
-    gap: 20px;
-    padding: 20px;
-    min-height: 600px;
+    grid-template-rows: 120px 1fr 140px;
+    grid-template-columns: 180px 1fr 180px;
+    gap: 10px;
+    padding: 10px;
+    min-height: 0;
 }
 
-/* 其他玩家区域 */
+/* 桌面端：other-players包装器使用contents显示 */
 .other-players {
+    display: contents;
+}
+
+/* 北方玩家 */
+.player.north {
     grid-area: north;
     display: flex;
-    justify-content: space-around;
+    flex-direction: column;
     align-items: center;
-}
-
-.player {
     background: rgba(0, 0, 0, 0.2);
     border: 2px solid #4a7c59;
     border-radius: 10px;
-    padding: 15px;
-    min-width: 200px;
-    text-align: center;
+    padding: 10px;
+    max-width: 100%;
+    overflow: hidden;
 }
 
+/* 西方玩家 */
 .player.west {
     grid-area: west;
-    writing-mode: vertical-rl;
-    text-orientation: mixed;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.2);
+    border: 2px solid #4a7c59;
+    border-radius: 10px;
+    padding: 10px;
+    writing-mode: horizontal-tb;
+    max-height: 100%;
+    overflow: hidden;
 }
 
+/* 东方玩家 */
 .player.east {
     grid-area: east;
-    writing-mode: vertical-rl;
-    text-orientation: mixed;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.2);
+    border: 2px solid #4a7c59;
+    border-radius: 10px;
+    padding: 10px;
+    writing-mode: horizontal-tb;
+    max-height: 100%;
+    overflow: hidden;
 }
 
 .player-name {
-    font-size: 1.2rem;
+    font-size: 1rem;
     font-weight: bold;
     color: #ffd700;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+/* 其他玩家的手牌显示 */
+.player:not(.current-player) .hand-tiles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+}
+
+/* 北方玩家的手牌水平排列 */
+.player.north .hand-tiles {
+    max-width: 100%;
+    max-height: calc(100% - 40px); /* 减去玩家名称和内边距的高度 */
+    overflow-x: auto;
+    overflow-y: hidden;
+    flex-wrap: nowrap;
+    scrollbar-width: thin;
+    scrollbar-color: #4a7c59 transparent;
+}
+
+/* 北方玩家滚动条样式 */
+.player.north .hand-tiles::-webkit-scrollbar {
+    height: 4px;
+}
+
+.player.north .hand-tiles::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.player.north .hand-tiles::-webkit-scrollbar-thumb {
+    background: #4a7c59;
+    border-radius: 2px;
+}
+
+.player.north .hand-tiles::-webkit-scrollbar-thumb:hover {
+    background: #5a8c69;
+}
+
+/* 西方和东方玩家的手牌垂直排列 */
+.player.west .hand-tiles,
+.player.east .hand-tiles {
+    flex-direction: column;
+    max-height: calc(100% - 40px); /* 减去玩家名称和内边距的高度 */
+    max-width: 60px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    flex: 1;
+    min-height: 0;
+    scrollbar-width: thin;
+    scrollbar-color: #4a7c59 transparent;
+}
+
+/* 自定义滚动条样式 */
+.player.west .hand-tiles::-webkit-scrollbar,
+.player.east .hand-tiles::-webkit-scrollbar {
+    width: 4px;
+}
+
+.player.west .hand-tiles::-webkit-scrollbar-track,
+.player.east .hand-tiles::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.player.west .hand-tiles::-webkit-scrollbar-thumb,
+.player.east .hand-tiles::-webkit-scrollbar-thumb {
+    background: #4a7c59;
+    border-radius: 2px;
+}
+
+.player.west .hand-tiles::-webkit-scrollbar-thumb:hover,
+.player.east .hand-tiles::-webkit-scrollbar-thumb:hover {
+    background: #5a8c69;
 }
 
 /* 中央桌面区域 */
@@ -105,11 +205,12 @@ body {
     background: rgba(0, 0, 0, 0.3);
     border: 3px solid #4a7c59;
     border-radius: 15px;
-    padding: 20px;
+    padding: 15px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    min-height: 0;
 }
 
 .discarded-tiles {
@@ -117,18 +218,18 @@ body {
     width: 100%;
     background: rgba(255, 255, 255, 0.05);
     border-radius: 10px;
-    padding: 15px;
-    margin-bottom: 20px;
-    min-height: 200px;
+    padding: 10px;
+    margin-bottom: 15px;
     display: flex;
     flex-wrap: wrap;
-    gap: 5px;
+    gap: 3px;
     overflow-y: auto;
+    min-height: 0;
 }
 
 .game-actions {
     display: flex;
-    gap: 15px;
+    gap: 10px;
     flex-wrap: wrap;
     justify-content: center;
 }
@@ -139,26 +240,37 @@ body {
     background: rgba(0, 0, 0, 0.2);
     border: 2px solid #ffd700;
     border-radius: 10px;
-    padding: 20px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+.current-player .player-name {
+    margin-bottom: 10px;
 }
 
 .hand-tiles {
     display: flex;
-    gap: 5px;
+    gap: 4px;
     flex-wrap: wrap;
-    margin-top: 10px;
-    min-height: 60px;
-    padding: 10px;
+    margin-top: 8px;
+    padding: 8px;
     background: rgba(255, 255, 255, 0.05);
     border-radius: 8px;
+    min-height: 60px;
+    overflow-x: auto;
 }
 
 .melded-tiles {
-    margin-top: 15px;
-    padding: 10px;
+    margin-top: 10px;
+    padding: 8px;
     background: rgba(255, 255, 255, 0.05);
     border-radius: 8px;
-    min-height: 40px;
+    min-height: 35px;
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
 }
 
 /* 按钮样式 */
@@ -166,19 +278,19 @@ body {
     background: linear-gradient(145deg, #4a7c59, #2c5530);
     color: white;
     border: none;
-    padding: 12px 20px;
-    border-radius: 8px;
-    font-size: 1rem;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 0.9rem;
     font-weight: bold;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
 }
 
 .action-btn:hover:not(:disabled), .control-btn:hover {
     background: linear-gradient(145deg, #5a8c69, #3c6540);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
 }
 
 .action-btn:disabled {
@@ -190,11 +302,14 @@ body {
 /* 控制面板 */
 .control-panel {
     background: rgba(0, 0, 0, 0.3);
-    padding: 15px 30px;
+    padding: 10px 20px;
     display: flex;
     justify-content: center;
-    gap: 20px;
+    gap: 15px;
     border-top: 2px solid #4a7c59;
+    height: 50px;
+    flex-shrink: 0;
+    align-items: center;
 }
 
 /* 模态框样式 */
@@ -223,6 +338,8 @@ body {
     width: 90%;
     position: relative;
     border: 2px solid #4a7c59;
+    max-height: 80vh;
+    overflow-y: auto;
 }
 
 .close {
@@ -276,34 +393,125 @@ body {
 }
 
 /* 响应式设计 */
+@media (max-width: 1200px) {
+    .game-container {
+        grid-template-columns: 150px 1fr 150px;
+        grid-template-rows: 100px 1fr 120px;
+    }
+    
+    .game-header h1 {
+        font-size: 1.3rem;
+    }
+    
+    .game-info {
+        font-size: 0.8rem;
+        gap: 15px;
+    }
+    
+    /* 调整侧边玩家区域的最大宽度 */
+    .player.west .hand-tiles,
+    .player.east .hand-tiles {
+        max-width: 50px;
+    }
+    
+    /* 调整北方玩家区域的高度计算 */
+    .player.north .hand-tiles {
+        max-height: calc(100% - 35px);
+    }
+    
+    .player.west .hand-tiles,
+    .player.east .hand-tiles {
+        max-height: calc(100% - 35px);
+    }
+}
+
 @media (max-width: 768px) {
+    body {
+        overflow-y: auto;
+        height: auto;
+        min-height: 100vh;
+    }
+    
+    #app {
+        height: auto;
+        min-height: 100vh;
+    }
+    
     .game-container {
         grid-template-areas: 
-            "north"
+            "other-players"
             "center"
             "south";
         grid-template-rows: auto 1fr auto;
         grid-template-columns: 1fr;
+        gap: 15px;
     }
     
+    /* 移动端其他玩家区域 */
     .other-players {
-        flex-direction: column;
+        display: flex !important;
+        justify-content: space-around;
         gap: 10px;
+        grid-area: other-players;
+        padding: 10px;
+        background: rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
     }
     
-    .player.west, .player.east {
-        writing-mode: horizontal-tb;
-        text-orientation: mixed;
+    .player.north,
+    .player.west,
+    .player.east {
+        grid-area: unset;
+        flex: 1;
+        max-width: 120px;
+        min-height: 80px;
+    }
+    
+    .player.west .hand-tiles,
+    .player.east .hand-tiles {
+        flex-direction: row;
+        max-width: none;
+        max-height: 60px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        flex-wrap: nowrap;
+    }
+    
+    /* 移动端所有玩家手牌区域的高度限制 */
+    .player.north .hand-tiles,
+    .player.west .hand-tiles,
+    .player.east .hand-tiles {
+        max-height: calc(100% - 30px);
     }
     
     .game-header {
         flex-direction: column;
-        gap: 15px;
+        gap: 10px;
         text-align: center;
+        height: auto;
+        padding: 15px;
     }
     
     .game-info {
         flex-direction: column;
-        gap: 10px;
+        gap: 8px;
+    }
+    
+    .control-panel {
+        flex-wrap: wrap;
+        height: auto;
+        padding: 15px;
+    }
+    
+    .table-center {
+        min-height: 300px;
+    }
+    
+    .current-player {
+        padding: 10px;
+    }
+    
+    .hand-tiles {
+        min-height: 50px;
     }
 } 

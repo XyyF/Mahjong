@@ -1,132 +1,109 @@
-/* 麻将牌样式 */
+/* 麻将牌基础样式 */
 .tile {
     width: 40px;
     height: 56px;
     background: linear-gradient(145deg, #f8f8f8, #e0e0e0);
     border: 2px solid #333;
     border-radius: 6px;
-    display: inline-flex;
-    align-items: center;
+    display: flex;
+    flex-direction: column;
     justify-content: center;
-    font-size: 14px;
-    font-weight: bold;
-    color: #333;
+    align-items: center;
     cursor: pointer;
-    transition: all 0.2s ease;
-    position: relative;
+    transition: all 0.3s ease;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-    user-select: none;
+    font-family: 'Microsoft YaHei', Arial, sans-serif;
+    font-weight: bold;
+    position: relative;
+    flex-shrink: 0;
 }
 
-.tile:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-}
-
-.tile.selected {
-    transform: translateY(-8px);
-    border-color: #ffd700;
-    box-shadow: 0 6px 12px rgba(255, 215, 0, 0.5);
-}
-
-.tile.disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
-/* 不同花色的牌 */
-.tile.wan {
-    color: #d32f2f;
-}
-
-.tile.tiao {
-    color: #2e7d32;
-}
-
-.tile.tong {
-    color: #1976d2;
-}
-
-/* 牌背面 */
+/* 牌背样式 */
 .tile.back {
-    background: linear-gradient(145deg, #4a7c59, #2c5530);
-    color: transparent;
-    border-color: #1a3d1f;
+    background: linear-gradient(145deg, #2c5530, #1a3d1f);
+    border-color: #4a7c59;
+    cursor: default;
 }
 
 .tile.back::before {
-    content: '🀫';
-    font-size: 20px;
+    content: '🀄';
+    font-size: 24px;
     color: #ffd700;
 }
 
-/* 打出的牌 */
+/* 牌面数字 */
+.tile-number {
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 1;
+    margin-bottom: 2px;
+}
+
+/* 牌面花色 */
+.tile-suit {
+    font-size: 10px;
+    font-weight: normal;
+    opacity: 0.8;
+}
+
+/* 万字牌 */
+.tile.wan .tile-number {
+    color: #d32f2f;
+}
+
+.tile.wan .tile-suit {
+    color: #d32f2f;
+}
+
+/* 条子牌 */
+.tile.tiao .tile-number {
+    color: #2e7d32;
+}
+
+.tile.tiao .tile-suit {
+    color: #2e7d32;
+}
+
+/* 筒子牌 */
+.tile.tong .tile-number {
+    color: #1976d2;
+}
+
+.tile.tong .tile-suit {
+    color: #1976d2;
+}
+
+/* 可点击状态 */
+.tile.clickable:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    background: linear-gradient(145deg, #fff, #f0f0f0);
+}
+
+/* 选中状态 */
+.tile.selected {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(255, 215, 0, 0.6);
+    border-color: #ffd700;
+    background: linear-gradient(145deg, #fffacd, #f0e68c);
+}
+
+/* 弃牌样式 */
 .discarded-tile {
-    width: 35px;
-    height: 50px;
+    width: 32px;
+    height: 44px;
     background: linear-gradient(145deg, #f0f0f0, #d0d0d0);
     border: 1px solid #666;
     border-radius: 4px;
-    display: inline-flex;
-    align-items: center;
+    display: flex;
     justify-content: center;
-    font-size: 12px;
-    font-weight: bold;
-    color: #333;
+    align-items: center;
     margin: 2px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    opacity: 0.8;
+    flex-shrink: 0;
 }
 
-/* 碰杠牌组 */
-.meld {
-    display: inline-flex;
-    gap: 2px;
-    margin: 0 5px;
-    padding: 5px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 6px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.meld .tile {
-    width: 35px;
-    height: 50px;
-    font-size: 12px;
-}
-
-.meld.peng .tile:nth-child(2) {
-    transform: rotate(90deg);
-    margin: 0 -5px;
-}
-
-.meld.gang .tile:nth-child(2),
-.meld.gang .tile:nth-child(3) {
-    transform: rotate(90deg);
-    margin: 0 -5px;
-}
-
-/* 其他玩家的牌（背面） */
-.other-players .hand-tiles .tile {
-    width: 30px;
-    height: 42px;
-    font-size: 10px;
-}
-
-.player.west .hand-tiles,
-.player.east .hand-tiles {
-    flex-direction: column;
-    max-height: 300px;
-    overflow-y: auto;
-}
-
-.player.west .tile,
-.player.east .tile {
-    writing-mode: horizontal-tb;
-    text-orientation: upright;
-}
-
-/* 牌的数字和花色显示 */
-.tile-content {
+.discarded-tile .tile-content {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -134,136 +111,127 @@
     height: 100%;
 }
 
-.tile-number {
-    font-size: 16px;
+.discarded-tile .tile-number {
+    font-size: 14px;
     font-weight: bold;
     line-height: 1;
 }
 
-.tile-suit {
-    font-size: 10px;
-    margin-top: 2px;
-    opacity: 0.8;
+.discarded-tile .tile-suit {
+    font-size: 8px;
+    opacity: 0.7;
 }
 
-/* 特殊牌型标识 */
-.tile.highlighted {
-    animation: pulse 1s infinite;
+/* 其他玩家区域的牌背 */
+.player:not(.current-player) .tile.back {
+    width: 28px;
+    height: 40px;
+    font-size: 16px;
 }
 
-@keyframes pulse {
-    0% { box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); }
-    50% { box-shadow: 0 4px 8px rgba(255, 215, 0, 0.6); }
-    100% { box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); }
+/* 西方和东方玩家的牌背（垂直排列） */
+.player.west .tile.back,
+.player.east .tile.back {
+    width: 40px;
+    height: 28px;
+    margin: 1px 0;
 }
 
-/* 可操作提示 */
-.tile.can-peng {
-    border-color: #ff9800;
-    box-shadow: 0 0 10px rgba(255, 152, 0, 0.5);
+/* 碰杠牌组样式 */
+.meld {
+    display: flex;
+    gap: 2px;
+    margin: 2px;
+    padding: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.tile.can-gang {
-    border-color: #f44336;
-    box-shadow: 0 0 10px rgba(244, 67, 54, 0.5);
-}
-
-.tile.can-hu {
+.meld.peng {
     border-color: #4caf50;
-    box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
-    animation: glow 1s infinite alternate;
 }
 
-@keyframes glow {
-    from { box-shadow: 0 0 10px rgba(76, 175, 80, 0.5); }
-    to { box-shadow: 0 0 20px rgba(76, 175, 80, 0.8); }
+.meld.gang {
+    border-color: #ff9800;
 }
 
-/* 手牌排序动画 */
-.hand-tiles.sorting .tile {
-    transition: transform 0.3s ease;
+.meld .tile {
+    width: 32px;
+    height: 44px;
+    font-size: 14px;
 }
 
-/* 摸牌动画 */
-.tile.drawing {
-    animation: drawTile 0.5s ease-out;
+.meld .tile-number {
+    font-size: 14px;
 }
 
-@keyframes drawTile {
-    0% {
-        transform: translateX(100px) scale(0.8);
+.meld .tile-suit {
+    font-size: 8px;
+}
+
+/* 动画效果 */
+@keyframes tileAppear {
+    from {
         opacity: 0;
+        transform: scale(0.8) translateY(-10px);
     }
-    100% {
-        transform: translateX(0) scale(1);
+    to {
         opacity: 1;
+        transform: scale(1) translateY(0);
     }
 }
 
-/* 出牌动画 */
-.tile.discarding {
-    animation: discardTile 0.5s ease-out forwards;
-}
-
-@keyframes discardTile {
-    0% {
-        transform: translateY(0) scale(1);
-        opacity: 1;
+@keyframes tileDiscard {
+    from {
+        transform: scale(1) translateY(0);
     }
-    100% {
-        transform: translateY(-50px) scale(0.9);
-        opacity: 0.7;
+    to {
+        transform: scale(0.9) translateY(10px);
+        opacity: 0.8;
     }
 }
 
-/* 胡牌特效 */
-.winning-tiles .tile {
-    animation: winningGlow 1s infinite alternate;
+.tile.appear {
+    animation: tileAppear 0.3s ease-out;
 }
 
-@keyframes winningGlow {
-    0% {
-        box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
-        transform: scale(1);
+.tile.discard {
+    animation: tileDiscard 0.3s ease-out;
+}
+
+/* 响应式调整 */
+@media (max-width: 1200px) {
+    .tile {
+        width: 36px;
+        height: 50px;
     }
-    100% {
-        box-shadow: 0 0 25px rgba(255, 215, 0, 1);
-        transform: scale(1.05);
+    
+    .tile-number {
+        font-size: 16px;
+    }
+    
+    .tile-suit {
+        font-size: 9px;
+    }
+    
+    .player:not(.current-player) .tile.back {
+        width: 24px;
+        height: 36px;
+        font-size: 14px;
+    }
+    
+    .player.west .tile.back,
+    .player.east .tile.back {
+        width: 36px;
+        height: 24px;
     }
 }
 
-/* 响应式麻将牌 */
 @media (max-width: 768px) {
     .tile {
-        width: 35px;
-        height: 50px;
-        font-size: 12px;
-    }
-    
-    .discarded-tile {
-        width: 30px;
-        height: 42px;
-        font-size: 10px;
-    }
-    
-    .meld .tile {
-        width: 30px;
-        height: 42px;
-        font-size: 10px;
-    }
-    
-    .other-players .hand-tiles .tile {
-        width: 25px;
-        height: 35px;
-        font-size: 8px;
-    }
-}
-
-@media (max-width: 480px) {
-    .tile {
-        width: 30px;
-        height: 42px;
-        font-size: 10px;
+        width: 32px;
+        height: 44px;
     }
     
     .tile-number {
@@ -272,5 +240,43 @@
     
     .tile-suit {
         font-size: 8px;
+    }
+    
+    .player:not(.current-player) .tile.back {
+        width: 20px;
+        height: 30px;
+        font-size: 12px;
+    }
+    
+    .player.west .tile.back,
+    .player.east .tile.back {
+        width: 30px;
+        height: 20px;
+    }
+    
+    .discarded-tile {
+        width: 28px;
+        height: 38px;
+    }
+    
+    .discarded-tile .tile-number {
+        font-size: 12px;
+    }
+    
+    .discarded-tile .tile-suit {
+        font-size: 7px;
+    }
+    
+    .meld .tile {
+        width: 28px;
+        height: 38px;
+    }
+    
+    .meld .tile-number {
+        font-size: 12px;
+    }
+    
+    .meld .tile-suit {
+        font-size: 7px;
     }
 } 

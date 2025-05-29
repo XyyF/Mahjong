@@ -27,26 +27,49 @@ export class UIManager {
             south: document.getElementById('player-south')
         };
         
-        // 当前玩家手牌区域
+        // 当前玩家手牌和碰杠区域
         this.currentHandElement = document.getElementById('current-hand');
         this.currentMeldedElement = document.getElementById('current-melded');
         
         // 弃牌区域
         this.discardedTilesElement = document.getElementById('discarded-tiles');
         
-        // 按钮元素
+        // 操作按钮
         this.drawTileBtn = document.getElementById('draw-tile');
         this.discardTileBtn = document.getElementById('discard-tile');
         this.pengBtn = document.getElementById('peng');
         this.gangBtn = document.getElementById('gang');
         this.huBtn = document.getElementById('hu');
+        
+        // 控制按钮
         this.newGameBtn = document.getElementById('new-game');
         this.autoSortBtn = document.getElementById('auto-sort');
         this.gameRulesBtn = document.getElementById('game-rules');
         
-        // 模态框元素
+        // 模态框
         this.rulesModal = document.getElementById('rules-modal');
-        this.closeModalBtn = this.rulesModal.querySelector('.close');
+        this.closeBtn = this.rulesModal.querySelector('.close');
+        
+        // 验证所有必需元素是否存在
+        const requiredElements = [
+            'currentPlayerElement', 'remainingTilesElement',
+            'currentHandElement', 'currentMeldedElement', 'discardedTilesElement',
+            'drawTileBtn', 'discardTileBtn', 'pengBtn', 'gangBtn', 'huBtn',
+            'newGameBtn', 'autoSortBtn', 'gameRulesBtn', 'rulesModal'
+        ];
+        
+        for (const elementName of requiredElements) {
+            if (!this[elementName]) {
+                console.error(`Required element not found: ${elementName}`);
+            }
+        }
+        
+        // 验证玩家元素
+        for (const [position, element] of Object.entries(this.playerElements)) {
+            if (!element) {
+                console.error(`Player element not found: ${position}`);
+            }
+        }
     }
 
     /**
@@ -66,7 +89,7 @@ export class UIManager {
         this.gameRulesBtn.addEventListener('click', () => this.showRules());
         
         // 模态框关闭
-        this.closeModalBtn.addEventListener('click', () => this.hideRules());
+        this.closeBtn.addEventListener('click', () => this.hideRules());
         this.rulesModal.addEventListener('click', (e) => {
             if (e.target === this.rulesModal) {
                 this.hideRules();
